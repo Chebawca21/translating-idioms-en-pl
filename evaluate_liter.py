@@ -2,10 +2,10 @@ from liter import LiTER
 from tokenizer import Tokenizer
 from transformer import Transformer
 
-with open('processed_data.txt', 'r', encoding='utf8') as f:
+with open('data_after/processed_data.txt', 'r', encoding='utf8') as f:
     sources = f.readlines()
 
-with open('translated_data.txt', 'r', encoding='utf8') as f:
+with open('data_after/translated_data.txt', 'r', encoding='utf8') as f:
     references = f.readlines()
 
 hypothesises = []

@@ -1,5 +1,5 @@
-EN_PL = "en-pl.txt"
-PL_EN = "pl-en.txt"
+EN_PL = "data_after/en-pl.txt"
+PL_EN = "data_after/pl-en.txt"
 
 
 class LiTER:
