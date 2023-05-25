@@ -1,0 +1,1 @@
+python3 phrase_extractor/phrase_extractor.py --phrases data_after/idioms-en.txt --corpus data_after/ted2020/TED2020.en-pl.en --output data_after/ted2020/out_ted --lang en --model_size sm
