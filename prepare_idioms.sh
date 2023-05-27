@@ -1,2 +1,2 @@
-python3 phrase_extractor/phrase_extractor.py --phrases data_after/idioms-en.txt --corpus data_after/ted2020/TED2020.en-pl.en --output data_after/ted2020/out_ted --lang en --model_size sm
-python3 concatenate_idom_sentences.py --annotations data_after/ted2020/out_ted/annotations.tsv --corpus data_after/ted2020/TED2020.en-pl.pl --output data_after/ted2020 --lang en-pl
+python3 phrase_extractor/phrase_extractor.py --phrases data/idioms-en.txt --corpus data/ted2020/TED2020.en-pl.en --output data/ted2020/out_ted --lang en --model_size sm
+python3 concatenate_idom_sentences.py --annotations data/ted2020/out_ted/annotations.tsv --corpus data/ted2020/TED2020.en-pl --output data/ted2020 --lang en-pl --test_split 0.3

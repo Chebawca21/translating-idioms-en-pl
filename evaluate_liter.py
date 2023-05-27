@@ -2,10 +2,10 @@ from liter import LiTER
 from transformer import Transformer
 import torch
 
-with open('data_after/processed_data.txt', 'r', encoding='utf8') as f:
+with open('data/processed_data.txt', 'r', encoding='utf8') as f:
     sources = f.readlines()
 
-with open('data_after/translated_data.txt', 'r', encoding='utf8') as f:
+with open('data/translated_data.txt', 'r', encoding='utf8') as f:
     references = f.readlines()
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"

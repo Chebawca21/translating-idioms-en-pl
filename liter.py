@@ -1,8 +1,8 @@
 from tokenizer import Tokenizer
 
 
-EN_PL = "data_after/en-pl.txt"
-PL_EN = "data_after/pl-en.txt"
+EN_PL = "data/en-pl.txt"
+PL_EN = "data/pl-en.txt"
 
 
 class LiTER:
