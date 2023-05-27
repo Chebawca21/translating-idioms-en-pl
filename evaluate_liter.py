@@ -1,5 +1,4 @@
 from liter import LiTER
-from tokenizer import Tokenizer
 from transformer import Transformer
 import torch
 
@@ -14,21 +13,12 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 hypothesises = []
 
 translator = Transformer(device)
-tokenizer = Tokenizer()
 liter = LiTER()
 
-n_literal = 0
 for i in range(len(sources)):
     hypothesis = translator.translate(sources[i])
     hypothesises.append(hypothesis)
 
-    tk_source = tokenizer.tokenize(sources[i], 'en')
-    tk_reference = tokenizer.tokenize(references[i], 'pl')
-    tk_hypothesis = tokenizer.tokenize(hypothesis, 'pl')
-
-    is_literal = liter.has_liter(tk_source, tk_reference, tk_hypothesis, 'en')
-    if is_literal:
-        print(i + 1, hypothesis)
-        n_literal = n_literal + 1
+n_literal = liter.evaluate_liter(sources, references, hypothesises, 'en', 'pl')
 
 print(n_literal)
