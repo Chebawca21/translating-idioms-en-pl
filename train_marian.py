@@ -1,11 +1,13 @@
 from liter import LiTER
-from tokenizer import Tokenizer
 from transformer import Transformer, DataCollatorForSeq2Seq
 from datasets import Dataset, load_dataset
 import torch
 
-FIRST_CORPUS = "data/ted2020/idiom_sentences.en"
-SECOND_CORPUS = "data_/ted2020/idiom_sentences.pl"
+FIRST_CORPUS_TRAIN = "data/europarl/idiom_sentences_train.en"
+SECOND_CORPUS_TRAIN = "data/europarl/idiom_sentences_train.pl"
+FIRST_CORPUS_TEST = "data/europarl/idiom_sentences_test.en"
+SECOND_CORPUS_TEST = "data/europarl/idiom_sentences_test.pl"
+
 
 def prepare_dataset(first_corpus, second_corpus):
     with open(first_corpus, 'r') as f:
@@ -27,17 +29,29 @@ def prepare_dataset(first_corpus, second_corpus):
     return Dataset.from_dict(dataset)
 
 
-source_lang = "en"
-target_lang = "pl"
 prefix = "translate English to Polish: "
+
+with open(FIRST_CORPUS_TEST, 'r', encoding='utf8') as f:
+    sources = f.readlines()
+
+with open(SECOND_CORPUS_TEST, 'r', encoding='utf8') as f:
+    references = f.readlines()
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 translator = Transformer(device)
+liter = LiTER()
 
-dataset = prepare_dataset(FIRST_CORPUS, SECOND_CORPUS)
-dataset = dataset.train_test_split(test_size=0.2)
+hypothesises = translator.translate(sources)
+n_literal_before = liter.evaluate_liter(sources, references, hypothesises, 'en', 'pl')
 
-tokenized_dataset = dataset.map(translator.preprocess_function, batched=True)
+train_dataset = prepare_dataset(FIRST_CORPUS_TRAIN, SECOND_CORPUS_TRAIN)
+test_dataset = prepare_dataset(FIRST_CORPUS_TEST, SECOND_CORPUS_TEST)
+tokenized_train_dataset = train_dataset.map(translator.preprocess_function, batched=True)
+tokenized_test_dataset = test_dataset.map(translator.preprocess_function, batched=True)
+translator.train_idioms(tokenized_train_dataset, tokenized_test_dataset, sources, references)
 
-translator.train(tokenized_dataset)
+hypothesises = translator.translate(sources)
+n_literal_after = liter.evaluate_liter(sources, references, hypothesises, 'en', 'pl')
+
+print(n_literal_before, n_literal_after)

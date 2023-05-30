@@ -93,6 +93,6 @@ class LiTER:
 
             is_literal = self.has_liter(tk_source, tk_reference, tk_hypothesis, source_lang)
             if is_literal:
-                print(i, hypothesises[i])
+                # print(i, hypothesises[i])
                 n_literal = n_literal + 1
         return n_literal
