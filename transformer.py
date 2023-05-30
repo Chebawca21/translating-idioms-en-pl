@@ -46,6 +46,12 @@ class Transformer:
 
         return preds, labels
 
+    def evaluate_bleu(self, sources, references):
+        metric = evaluate.load("sacrebleu")
+        hyphotesises = self.translate(sources)
+        result = metric.compute(predictions=hyphotesises, references=references)
+        return result
+
     def train_idioms(self, tokenized_train_dataset, tokenized_test_dataset, idiom_sources, idiom_references):
         data_collator = DataCollatorForSeq2Seq(tokenizer=self.tokenizer, model=MODEL_NAME)
 
