@@ -95,4 +95,4 @@ class LiTER:
             if is_literal:
                 # print(i, hypothesises[i])
                 n_literal = n_literal + 1
-        return n_literal
+        return n_literal / len(sources)
