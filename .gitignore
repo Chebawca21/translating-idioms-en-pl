@@ -1,2 +1,6 @@
 __pycache__
 *.zip
+data_post*
+data_pre*
+venv
+out_*

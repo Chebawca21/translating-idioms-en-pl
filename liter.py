@@ -1,5 +1,8 @@
-EN_PL = "en-pl.txt"
-PL_EN = "pl-en.txt"
+from tokenizer import Tokenizer
+
+
+EN_PL = "data/en-pl.txt"
+PL_EN = "data/pl-en.txt"
 
 
 class LiTER:
@@ -79,3 +82,17 @@ class LiTER:
                 break
 
         return has_blocked
+
+    def evaluate_liter(self, sources, references, hypothesises, source_lang, target_lang):
+        tokenizer = Tokenizer()
+        n_literal = 0
+        for i in range(len(sources)):
+            tk_source = tokenizer.tokenize(sources[i], source_lang)
+            tk_reference = tokenizer.tokenize(references[i], target_lang)
+            tk_hypothesis = tokenizer.tokenize(hypothesises[i], target_lang)
+
+            is_literal = self.has_liter(tk_source, tk_reference, tk_hypothesis, source_lang)
+            if is_literal:
+                # print(i, hypothesises[i])
+                n_literal = n_literal + 1
+        return n_literal / len(sources)
